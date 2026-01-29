@@ -1,0 +1,28 @@
+# CI pipeline, transpiles the .ts files and spits out .js file on the runner machine
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run a simple one line script on the runner
+        run: echo hello world from the runner machine
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install dependencies in the project directory
+        run: pnpm Install
+
+      - name: Build the project to transpile .ts files to .js files
+        run: pnpm build
